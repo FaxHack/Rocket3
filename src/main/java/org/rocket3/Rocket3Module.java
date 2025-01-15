@@ -59,7 +59,7 @@ public class Rocket3Module extends ToggleableModule {
 	 * Settings
 	 */
 	public final BooleanSetting countCrafted = new BooleanSetting("Print", "Prints how many fireworks you've crafted in the session", false);
-	private final NumberSetting<Integer> delay = new NumberSetting<>("Delay (ms)", 0, 0, 1000)
+	public final NumberSetting<Integer> delay = new NumberSetting<>("Delay (ms)", 0, 0, 1000)
 			.incremental(1);
 
 	/**
@@ -73,7 +73,55 @@ public class Rocket3Module extends ToggleableModule {
 				this.delay);
 	}
 
-	
+	public boolean CheckRecipe(boolean paper,  AbstractContainerMenu containerMenu)
+	{
+		if(paper)
+		{	
+			
+			for(int inventorySlot = 1; inventorySlot <= 3; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					if(!containerMenu.getSlot(inventorySlot).getItem().getDisplayName().getString().equals("[Sugar Cane]"))
+					{
+						return false;
+					}
+				}
+				else 
+				{
+					return false;
+				}
+			}
+			for(int inventorySlot = 4; inventorySlot <= 9; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		return false;
+	}
+	public void CorrectRecipe(boolean paper, AbstractContainerMenu containerMenu)
+	{
+		if(paper)
+		{
+			for(int inventorySlot = 4; inventorySlot <= 9; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					try
+					{
+						Thread.sleep(delay.getValue());
+						InventoryUtils.clickSlot(inventorySlot, true);
+					}
+					catch (Exception e){}
+				}
+			}
+		}
+	}
 	private static final ExecutorService executor = Executors.newFixedThreadPool(2); 
 
 	boolean checking = false;
@@ -138,7 +186,6 @@ public class Rocket3Module extends ToggleableModule {
 			executor.submit(() -> {
 				for (int i = 0; i < 4; i++) {
 					for (int inventorySlot = 9; inventorySlot <= 45; inventorySlot++) {
-		
 						for(int j = 1; j <= 9; j++)
 						{
 							if(minecraft.screen instanceof CraftingScreen && containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Firework Rocket]"))
@@ -166,12 +213,13 @@ public class Rocket3Module extends ToggleableModule {
 							{
 								try {
 								Thread.sleep(delay.getValue());
+								
+								InventoryUtils.clickSlot(inventorySlot, true);
 								}
 								catch (Exception e) 
 									{
 			
 									}
-								InventoryUtils.clickSlot(inventorySlot, true);
 								break;
 							}
 						}
@@ -230,8 +278,27 @@ public class Rocket3Module extends ToggleableModule {
 							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Sugar Cane]"))
 							{
 								try {
+									if(!CheckRecipe(true, containerMenu))
+									{
 									Thread.sleep(delay.getValue());
 									InventoryUtils.clickSlot(inventorySlot, true);
+									}
+									else
+									{
+										CorrectRecipe(true,containerMenu);
+										if(CheckRecipe(true,containerMenu))
+										{
+										try{
+											Thread.sleep(delay.getValue());
+											InventoryUtils.clickSlot(0, true); //Grab the paper
+											break;
+											}
+											catch (Exception e) 
+											{
+				
+											}
+										}
+									}
 								}
 								catch (Exception e) 
 								{
@@ -243,8 +310,20 @@ public class Rocket3Module extends ToggleableModule {
 						else
 						{
 							try{
+								if(CheckRecipe(true,containerMenu))
+								{
 							Thread.sleep(delay.getValue());
 							InventoryUtils.clickSlot(0, true); //Grab the paper
+								}
+							else
+							{
+								CorrectRecipe(true,containerMenu);
+								if(CheckRecipe(true,containerMenu))
+								{
+							Thread.sleep(delay.getValue());
+							InventoryUtils.clickSlot(0, true); //Grab the paper
+								}
+							}
 							}
 							catch (Exception e) 
 							{
