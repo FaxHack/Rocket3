@@ -1,5 +1,7 @@
 Wawa's secret rocket cartel tool
 
+For Minecraft Version 1.20.4
+
 Installation:
 
 1. Move the plugin into the folder ".minecraft\rusherhack\plugins\"
