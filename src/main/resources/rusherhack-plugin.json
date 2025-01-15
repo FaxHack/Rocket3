@@ -1,0 +1,12 @@
+{
+  "Plugin-Class": "org.example.ExamplePlugin",
+  "Name": "Rocket3",
+  "Version": "${plugin_version}",
+  "Description": "Auto-crafts flight duration 3 rockets",
+  "Authors": [
+    "PK268"
+  ],
+  "Minecraft-Versions": [
+    "1.20.4"
+  ]
+}
