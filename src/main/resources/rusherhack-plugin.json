@@ -1,8 +1,8 @@
 {
-  "Plugin-Class": "org.example.ExamplePlugin",
+  "Plugin-Class": "org.example.Rocket3",
   "Name": "Rocket3",
   "Version": "${plugin_version}",
-  "Description": "Auto-crafts flight duration 3 rockets",
+  "Description": "Auto-crafts flight duration 3 rockets and paper",
   "Authors": [
     "PK268"
   ],
