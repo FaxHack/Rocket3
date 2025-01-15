@@ -1,6 +1,6 @@
 Wawa's secret rocket cartel tool
 
-For Minecraft Version 1.20.4
+A Rusherhack plugin for Minecraft Version 1.20.4
 
 Installation:
 
