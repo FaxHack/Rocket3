@@ -1,14 +1,21 @@
-Wawa's secret rocket cartel tool
+<div align="center">
+   <image src="https://i.imgur.com/D0Yue1c.png" width="400">
+</div>
+<div align="center">
 
-A Rusherhack plugin for Minecraft Version 1.20.4
+# Wawa's secret rocket cartel tool
 
-Installation:
+### A Rusherhack plugin for Minecraft Version 1.20.4
+
+</div>
+
+## Installation:
 
 1. Move the plugin into the folder ".minecraft\rusherhack\plugins\"
 2. Add JVM flag to minecraft instance "-Drusherhack.enablePlugins=true"
 3. Launch minecraft with rusherhack installed in the mods folder and the plugin "Rocket3" should appear as a module under "External"
 
-Usage:
+## Usage:
 
 1. Make sure you have a clean inventory (meaning only sugar cane, paper, gunpowder, or firework rockets) when you use the plugin. Otherwise it will not do anything.
 2. When you open a crafting table, the plugin will try to craft either paper or fireworks depending on the contents of your inventory.
