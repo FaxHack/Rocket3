@@ -1,4 +1,4 @@
-package org.example;
+package org.rocket3;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,12 +48,17 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 
 import org.rusherhack.client.api.utils.InventoryUtils;
-
+/**
+ * Crafts paper and duration 3 rockets
+ *
+ * @author PK268
+ */
 public class Rocket3Module extends ToggleableModule {
 
 	/**
 	 * Settings
 	 */
+	public final BooleanSetting countCrafted = new BooleanSetting("Print", "Prints how many fireworks you've crafted in the session", false);
 	private final NumberSetting<Integer> delay = new NumberSetting<>("Delay (ms)", 0, 0, 1000)
 			.incremental(1);
 
@@ -136,7 +141,7 @@ public class Rocket3Module extends ToggleableModule {
 		
 						for(int j = 1; j <= 9; j++)
 						{
-							if(containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Firework Rocket]"))
+							if(minecraft.screen instanceof CraftingScreen && containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Firework Rocket]"))
 							{
 								try
 								{
@@ -157,7 +162,7 @@ public class Rocket3Module extends ToggleableModule {
 		
 						if ( i <= 2) //gunpowder
 						{
-							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Gunpowder]"))
+							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Gunpowder]"))
 							{
 								try {
 								Thread.sleep(delay.getValue());
@@ -172,7 +177,7 @@ public class Rocket3Module extends ToggleableModule {
 						}
 						else //paper
 						{
-							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Paper]"))
+							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Paper]"))
 							{
 								try {
 								Thread.sleep(delay.getValue());
@@ -180,6 +185,7 @@ public class Rocket3Module extends ToggleableModule {
 								Thread.sleep(delay.getValue());
 								InventoryUtils.clickSlot(0, true); //Grab the fireworks
 								totalCrafted += 64*3;
+								if(countCrafted.getValue())
 								ChatUtils.print("Crafted! Total this session: " + totalCrafted);
 								}
 								catch (Exception e) 
@@ -199,7 +205,7 @@ public class Rocket3Module extends ToggleableModule {
 				for (int i = 0; i < 4; i++) {
 					for (int inventorySlot = 9; inventorySlot <= 45; inventorySlot++) {
 						for(int j = 1; j <= 9; j++){
-							if(containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Paper]"))
+							if(minecraft.screen instanceof CraftingScreen && containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Paper]"))
 							{
 								try
 								{
@@ -217,7 +223,8 @@ public class Rocket3Module extends ToggleableModule {
 						}
 	
 						ItemStack stack = containerMenu.getSlot(inventorySlot).getItem();
-	
+						if(minecraft.screen instanceof CraftingScreen )
+						{
 						if ( i <= 2)
 						{
 							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Sugar Cane]"))
@@ -247,6 +254,7 @@ public class Rocket3Module extends ToggleableModule {
 							return;
 						}
 					}
+				}
 				}
 		
 			});

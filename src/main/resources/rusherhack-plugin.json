@@ -1,5 +1,5 @@
 {
-  "Plugin-Class": "org.example.Rocket3",
+  "Plugin-Class": "org.rocket3.Rocket3Plugin",
   "Name": "Rocket3",
   "Version": "${plugin_version}",
   "Description": "Auto-crafts flight duration 3 rockets and paper",
