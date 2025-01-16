@@ -102,9 +102,39 @@ public class Rocket3Module extends ToggleableModule {
 			
 			return true;
 		}
-		return false;
+		else
+		{
+			for(int inventorySlot = 1; inventorySlot <= 3; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					if(!containerMenu.getSlot(inventorySlot).getItem().getDisplayName().getString().equals("[Gunpowder]"))
+					{
+						return false;
+					}
+				}
+				else 
+				{
+					return false;
+				}
+			}
+			if(!containerMenu.getSlot(4).getItem().getDisplayName().getString().equals("[Paper]"))
+			{
+				return false;
+			}
+
+			for(int inventorySlot = 5; inventorySlot <= 9; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
 	}
-	public void CorrectRecipe(boolean paper, AbstractContainerMenu containerMenu)
+	public boolean CorrectRecipe(boolean paper, AbstractContainerMenu containerMenu)
 	{
 		if(paper)
 		{
@@ -120,6 +150,56 @@ public class Rocket3Module extends ToggleableModule {
 					catch (Exception e){}
 				}
 			}
+			if(!CheckRecipe(paper,containerMenu))
+			{
+				for(int inventorySlot = 1; inventorySlot <= 9; inventorySlot++)
+				{
+					if(containerMenu.getSlot(inventorySlot).hasItem())
+					{
+						try
+						{
+							Thread.sleep(delay.getValue());
+							InventoryUtils.clickSlot(inventorySlot, true);
+						}
+						catch (Exception e){}
+					}
+				}
+				return false;
+			}
+			return true;
+		}
+		else
+		{
+			for(int inventorySlot = 5; inventorySlot <= 9; inventorySlot++)
+			{
+				if(containerMenu.getSlot(inventorySlot).hasItem())
+				{
+					try
+					{
+						Thread.sleep(delay.getValue());
+						InventoryUtils.clickSlot(inventorySlot, true);
+						
+					}
+					catch (Exception e){}
+				}
+			}
+			if(!CheckRecipe(paper,containerMenu))
+			{
+				for(int inventorySlot = 1; inventorySlot <= 9; inventorySlot++)
+				{
+					if(containerMenu.getSlot(inventorySlot).hasItem())
+					{
+						try
+						{
+							Thread.sleep(delay.getValue());
+							InventoryUtils.clickSlot(inventorySlot, true);
+						}
+						catch (Exception e){}
+					}
+				}
+				return false;
+			}
+			return true;
 		}
 	}
 	private static final ExecutorService executor = Executors.newFixedThreadPool(2); 
@@ -132,10 +212,10 @@ public class Rocket3Module extends ToggleableModule {
 	@Subscribe
 	private void onUpdate(EventUpdate event) {
 		if(activated)
-			fillCraftingGridWithDirt();
+			rocket3Update();
     }
 	Minecraft minecraft = Minecraft.getInstance();
-	public void fillCraftingGridWithDirt() {
+	public void rocket3Update() {
         if (!(minecraft.screen instanceof CraftingScreen)) {
             return; // Not in a crafting table GUI
         }
@@ -192,7 +272,7 @@ public class Rocket3Module extends ToggleableModule {
 							{
 								try
 								{
-								Thread.sleep(delay.getValue());
+									Thread.sleep(delay.getValue());
 								InventoryUtils.clickSlot(j, true);
 								}
 								catch (Exception e) 
@@ -212,9 +292,36 @@ public class Rocket3Module extends ToggleableModule {
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Gunpowder]"))
 							{
 								try {
-								Thread.sleep(delay.getValue());
-								
-								InventoryUtils.clickSlot(inventorySlot, true);
+									if(!CheckRecipe(false, containerMenu))
+									{
+										Thread.sleep(delay.getValue());
+										InventoryUtils.clickSlot(inventorySlot, true);
+									}
+									else
+									{
+										if(!CorrectRecipe(false,containerMenu))
+											return;
+										if(CheckRecipe(false,containerMenu))
+										{
+										try{
+											
+											Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(false,containerMenu))
+											{
+												
+											InventoryUtils.clickSlot(0, true); //Grab the rockets
+											totalCrafted += 64*3;
+										if(countCrafted.getValue())
+											ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+											break;
+										}
+											}
+											catch (Exception e) 
+											{
+				
+											}
+										}
+									}
 								}
 								catch (Exception e) 
 									{
@@ -227,21 +334,85 @@ public class Rocket3Module extends ToggleableModule {
 						{
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Paper]"))
 							{
-								try {
-								Thread.sleep(delay.getValue());
-								InventoryUtils.clickSlot(inventorySlot, true);
-								Thread.sleep(delay.getValue());
-								InventoryUtils.clickSlot(0, true); //Grab the fireworks
-								totalCrafted += 64*3;
-								if(countCrafted.getValue())
-								ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+								if(!CheckRecipe(false, containerMenu))
+								{	
+									try {
+									Thread.sleep(delay.getValue());
+									InventoryUtils.clickSlot(inventorySlot, true);
+									}
+									catch (Exception e) 
+									{}
 								}
-								catch (Exception e) 
+								else
 								{
-		
+									if(!CorrectRecipe(false,containerMenu))
+									return;
+								if(CheckRecipe(false,containerMenu))
+								{
+									try{
+										Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(false,containerMenu))
+											{
+												
+										InventoryUtils.clickSlot(0, true); //Grab the rockets
+										totalCrafted += 64*3;
+										if(countCrafted.getValue())
+											ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+										break;
+										}
+									}
+									catch (Exception e) 
+									{
+
+									}
 								}
-								return;
+								}
+
+							if(CheckRecipe(false,containerMenu))
+							{
+								try
+								{
+									
+									Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(false,containerMenu))
+											{
+												
+											InventoryUtils.clickSlot(0, true); //Grab the rockets
+											totalCrafted += 64*3;
+											if(countCrafted.getValue())
+												ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+												break;
+										}
+								}
+								catch (Exception e){}
+								
 							}
+							else
+							{
+								if(!CorrectRecipe(false,containerMenu))
+											return;
+								if(CheckRecipe(false,containerMenu))
+								{
+									try
+									{
+										
+										Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(false,containerMenu))
+											{
+												
+									InventoryUtils.clickSlot(0, true); //Grab the rockets
+									totalCrafted += 64*3;
+									if(countCrafted.getValue())
+										ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+										break;
+									}
+								}
+									catch (Exception e){}
+								}
+							}
+							
+						return;
+						}
 						}
 					}
 				}
@@ -285,57 +456,64 @@ public class Rocket3Module extends ToggleableModule {
 									}
 									else
 									{
-										CorrectRecipe(true,containerMenu);
+										if(!CorrectRecipe(false,containerMenu))
+											return;
 										if(CheckRecipe(true,containerMenu))
 										{
 										try{
 											Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+											{
 											InventoryUtils.clickSlot(0, true); //Grab the paper
 											break;
+											}
 											}
 											catch (Exception e) 
 											{
 				
 											}
 										}
+										}
 									}
-								}
-								catch (Exception e) 
-								{
+									catch (Exception e) 
+									{
 		
+									}
+									break;
 								}
-								break;
 							}
-						}
-						else
-						{
-							try{
-								if(CheckRecipe(true,containerMenu))
-								{
-							Thread.sleep(delay.getValue());
-							InventoryUtils.clickSlot(0, true); //Grab the paper
-								}
 							else
 							{
-								CorrectRecipe(true,containerMenu);
-								if(CheckRecipe(true,containerMenu))
-								{
-							Thread.sleep(delay.getValue());
-							InventoryUtils.clickSlot(0, true); //Grab the paper
+								try{
+									if(CheckRecipe(true,containerMenu))
+									{
+										Thread.sleep(delay.getValue());
+										if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+										{
+											InventoryUtils.clickSlot(0, true); //Grab the paper
+										}
+									}
+									else
+									{
+										if(!CorrectRecipe(false,containerMenu))
+											return;
+										if(CheckRecipe(true,containerMenu))
+										{
+											Thread.sleep(delay.getValue());
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+											{
+												InventoryUtils.clickSlot(0, true); //Grab the paper
+											}
+										}
+									}
 								}
+								catch (Exception e) {}
+								return;
 							}
-							}
-							catch (Exception e) 
-							{
-
-							}
-							
-							return;
 						}
 					}
-				}
-				}
-		
+				
+			}
 			});
 		}
     }
