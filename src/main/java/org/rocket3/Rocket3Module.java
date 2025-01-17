@@ -260,6 +260,8 @@ public class Rocket3Module extends ToggleableModule {
 		{
 			craftingFireworks = false;
 		}
+		
+		final boolean craftingOption = craftingPaper;
 
 		if(craftingFireworks)
 		{
@@ -292,16 +294,16 @@ public class Rocket3Module extends ToggleableModule {
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Gunpowder]"))
 							{
 								try {
-									if(!CheckRecipe(craftingPaper, containerMenu))
+									if(!CheckRecipe(craftingOption, containerMenu))
 									{
 										Thread.sleep(delay.getValue());
 										InventoryUtils.clickSlot(inventorySlot, true);
 									}
 									else
 									{
-										if(!CorrectRecipe(craftingPaper,containerMenu))
+										if(!CorrectRecipe(craftingOption,containerMenu))
 											return;
-										if(CheckRecipe(craftingPaper,containerMenu))
+										if(CheckRecipe(craftingOption,containerMenu))
 										{
 										try{
 											
@@ -334,7 +336,7 @@ public class Rocket3Module extends ToggleableModule {
 						{
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Paper]"))
 							{
-								if(!CheckRecipe(craftingPaper, containerMenu))
+								if(!CheckRecipe(craftingOption, containerMenu))
 								{	
 									try {
 									Thread.sleep(delay.getValue());
@@ -345,9 +347,9 @@ public class Rocket3Module extends ToggleableModule {
 								}
 								else
 								{
-									if(!CorrectRecipe(craftingPaper,containerMenu))
+									if(!CorrectRecipe(craftingOption,containerMenu))
 									return;
-								if(CheckRecipe(craftingPaper,containerMenu))
+								if(CheckRecipe(craftingOption,containerMenu))
 								{
 									try{
 										Thread.sleep(delay.getValue());
@@ -368,7 +370,7 @@ public class Rocket3Module extends ToggleableModule {
 								}
 								}
 
-							if(CheckRecipe(craftingPaper,containerMenu))
+							if(CheckRecipe(craftingOption,containerMenu))
 							{
 								try
 								{
@@ -389,9 +391,9 @@ public class Rocket3Module extends ToggleableModule {
 							}
 							else
 							{
-								if(!CorrectRecipe(craftingPaper,containerMenu))
+								if(!CorrectRecipe(craftingOption,containerMenu))
 											return;
-								if(CheckRecipe(craftingPaper,containerMenu))
+								if(CheckRecipe(craftingOption,containerMenu))
 								{
 									try
 									{
@@ -416,7 +418,7 @@ public class Rocket3Module extends ToggleableModule {
 						}
 					}
 				}
-				if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(craftingPaper,containerMenu))
+				if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(craftingOption,containerMenu))
 			{
 				InventoryUtils.clickSlot(0, true); //edge case where last rockets not crafted
 				totalCrafted += 64*3;
@@ -458,20 +460,20 @@ public class Rocket3Module extends ToggleableModule {
 							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Sugar Cane]"))
 							{
 								try {
-									if(!CheckRecipe(craftingPaper, containerMenu))
+									if(!CheckRecipe(craftingOption, containerMenu))
 									{
 									Thread.sleep(delay.getValue());
 									InventoryUtils.clickSlot(inventorySlot, true);
 									}
 									else
 									{
-										if(!CorrectRecipe(craftingPaper,containerMenu))
+										if(!CorrectRecipe(craftingOption,containerMenu))
 											return;
-										if(CheckRecipe(craftingPaper,containerMenu))
+										if(CheckRecipe(craftingOption,containerMenu))
 										{
 										try{
 											Thread.sleep(delay.getValue());
-											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingOption,containerMenu))
 											{
 											InventoryUtils.clickSlot(0, true); //Grab the paper
 											break;
@@ -494,22 +496,22 @@ public class Rocket3Module extends ToggleableModule {
 							else
 							{
 								try{
-									if(CheckRecipe(craftingPaper,containerMenu))
+									if(CheckRecipe(craftingOption,containerMenu))
 									{
 										Thread.sleep(delay.getValue());
-										if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
+										if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingOption,containerMenu))
 										{
 											InventoryUtils.clickSlot(0, true); //Grab the paper
 										}
 									}
 									else
 									{
-										if(!CorrectRecipe(craftingPaper,containerMenu))
+										if(!CorrectRecipe(craftingOption,containerMenu))
 											return;
-										if(CheckRecipe(craftingPaper,containerMenu))
+										if(CheckRecipe(craftingOption,containerMenu))
 										{
 											Thread.sleep(delay.getValue());
-											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingOption,containerMenu))
 											{
 												InventoryUtils.clickSlot(0, true); //Grab the paper
 											}
