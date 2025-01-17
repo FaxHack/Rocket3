@@ -292,16 +292,16 @@ public class Rocket3Module extends ToggleableModule {
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Gunpowder]"))
 							{
 								try {
-									if(!CheckRecipe(false, containerMenu))
+									if(!CheckRecipe(craftingPaper, containerMenu))
 									{
 										Thread.sleep(delay.getValue());
 										InventoryUtils.clickSlot(inventorySlot, true);
 									}
 									else
 									{
-										if(!CorrectRecipe(false,containerMenu))
+										if(!CorrectRecipe(craftingPaper,containerMenu))
 											return;
-										if(CheckRecipe(false,containerMenu))
+										if(CheckRecipe(craftingPaper,containerMenu))
 										{
 										try{
 											
@@ -334,7 +334,7 @@ public class Rocket3Module extends ToggleableModule {
 						{
 							if(minecraft.screen instanceof CraftingScreen && stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Paper]"))
 							{
-								if(!CheckRecipe(false, containerMenu))
+								if(!CheckRecipe(craftingPaper, containerMenu))
 								{	
 									try {
 									Thread.sleep(delay.getValue());
@@ -345,9 +345,9 @@ public class Rocket3Module extends ToggleableModule {
 								}
 								else
 								{
-									if(!CorrectRecipe(false,containerMenu))
+									if(!CorrectRecipe(craftingPaper,containerMenu))
 									return;
-								if(CheckRecipe(false,containerMenu))
+								if(CheckRecipe(craftingPaper,containerMenu))
 								{
 									try{
 										Thread.sleep(delay.getValue());
@@ -368,7 +368,7 @@ public class Rocket3Module extends ToggleableModule {
 								}
 								}
 
-							if(CheckRecipe(false,containerMenu))
+							if(CheckRecipe(craftingPaper,containerMenu))
 							{
 								try
 								{
@@ -389,9 +389,9 @@ public class Rocket3Module extends ToggleableModule {
 							}
 							else
 							{
-								if(!CorrectRecipe(false,containerMenu))
+								if(!CorrectRecipe(craftingPaper,containerMenu))
 											return;
-								if(CheckRecipe(false,containerMenu))
+								if(CheckRecipe(craftingPaper,containerMenu))
 								{
 									try
 									{
@@ -416,7 +416,16 @@ public class Rocket3Module extends ToggleableModule {
 						}
 					}
 				}
+				if(containerMenu.getSlot(0).getItem().getTag().toString().equals("{Fireworks:{Flight:3b}}") && CheckRecipe(craftingPaper,containerMenu))
+			{
+				InventoryUtils.clickSlot(0, true); //edge case where last rockets not crafted
+				totalCrafted += 64*3;
+				if(countCrafted.getValue())
+										ChatUtils.print("Crafted! Total this session: " + totalCrafted);
+				
+			}
 			});
+			
 		}
 		else if(craftingPaper)
 		{
@@ -449,20 +458,20 @@ public class Rocket3Module extends ToggleableModule {
 							if(stack.getCount() == 64 && stack.getDisplayName().getString().equals("[Sugar Cane]"))
 							{
 								try {
-									if(!CheckRecipe(true, containerMenu))
+									if(!CheckRecipe(craftingPaper, containerMenu))
 									{
 									Thread.sleep(delay.getValue());
 									InventoryUtils.clickSlot(inventorySlot, true);
 									}
 									else
 									{
-										if(!CorrectRecipe(true,containerMenu))
+										if(!CorrectRecipe(craftingPaper,containerMenu))
 											return;
-										if(CheckRecipe(true,containerMenu))
+										if(CheckRecipe(craftingPaper,containerMenu))
 										{
 										try{
 											Thread.sleep(delay.getValue());
-											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
 											{
 											InventoryUtils.clickSlot(0, true); //Grab the paper
 											break;
@@ -485,22 +494,22 @@ public class Rocket3Module extends ToggleableModule {
 							else
 							{
 								try{
-									if(CheckRecipe(true,containerMenu))
+									if(CheckRecipe(craftingPaper,containerMenu))
 									{
 										Thread.sleep(delay.getValue());
-										if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+										if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
 										{
 											InventoryUtils.clickSlot(0, true); //Grab the paper
 										}
 									}
 									else
 									{
-										if(!CorrectRecipe(true,containerMenu))
+										if(!CorrectRecipe(craftingPaper,containerMenu))
 											return;
-										if(CheckRecipe(true,containerMenu))
+										if(CheckRecipe(craftingPaper,containerMenu))
 										{
 											Thread.sleep(delay.getValue());
-											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(true,containerMenu))
+											if(containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingPaper,containerMenu))
 											{
 												InventoryUtils.clickSlot(0, true); //Grab the paper
 											}
