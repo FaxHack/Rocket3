@@ -13,6 +13,8 @@
 
 ### Try to wait a 3-5 seconds after crafting a shulker before crafting another, in my experience this leads to greater accuracy when crafting rockets and can reduce rockets that aren't duration 3.
 
+### Use in a high-TPS enviornment. If you have a lot of farms near you, it's likely that will hinder the perfornamce of the mod
+
 ## Installation:
 
 1. Move the plugin into the folder ".minecraft\rusherhack\plugins\"
