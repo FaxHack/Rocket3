@@ -268,6 +268,11 @@ public class Rocket3Module extends ToggleableModule {
 			executor.submit(() -> {
 				for (int i = 0; i < 4; i++) {
 					for (int inventorySlot = 9; inventorySlot <= 45; inventorySlot++) {
+
+						if (!(minecraft.screen instanceof CraftingScreen)) {
+							return; // Not in a crafting table GUI
+						}
+						
 						for(int j = 1; j <= 9; j++)
 						{
 							if(minecraft.screen instanceof CraftingScreen && containerMenu.getSlot(j).getItem().getDisplayName().getString().equals("[Firework Rocket]"))
