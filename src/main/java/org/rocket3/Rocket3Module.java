@@ -456,7 +456,7 @@ public class Rocket3Module extends ToggleableModule {
 									}
 									else
 									{
-										if(!CorrectRecipe(false,containerMenu))
+										if(!CorrectRecipe(true,containerMenu))
 											return;
 										if(CheckRecipe(true,containerMenu))
 										{
@@ -495,7 +495,7 @@ public class Rocket3Module extends ToggleableModule {
 									}
 									else
 									{
-										if(!CorrectRecipe(false,containerMenu))
+										if(!CorrectRecipe(true,containerMenu))
 											return;
 										if(CheckRecipe(true,containerMenu))
 										{
