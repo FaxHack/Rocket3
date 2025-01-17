@@ -9,6 +9,10 @@
 
 </div>
 
+# Tips
+
+### Try to wait a 3-5 seconds after crafting a shulker before crafting another, in my experience this leads to greater accuracy when crafting rockets and can reduce rockets that aren't duration 3.
+
 ## Installation:
 
 1. Move the plugin into the folder ".minecraft\rusherhack\plugins\"
@@ -20,7 +24,7 @@
 1. Make sure you have a clean inventory (meaning only sugar cane, paper, gunpowder, or firework rockets) when you use the plugin. Otherwise it will not do anything.
 2. When you open a crafting table, the plugin will try to craft either paper or fireworks depending on the contents of your inventory.
 3. To ensure the plugin always knows what to craft, here is my basic workflow:
-  - Turn the "Delay" option to ~100-120ms (for 60 ping, higher ping could result in a higher need for delay)
+  - The "Delay" option should work at 0, but if you run into issues with inconsistancy. Try setting it to ~100-120ms (tested at 60 ping, higher ping could result in a higher need for delay)
   - Have an empty inventory and move a shulker of sugar cane into your inventory
   - Open a crafting table and let it craft a shulker of paper
   - Open the empty shulker from the sugar cane and put 2 rows of paper into it. This should leave your hotbar with a row of paper
