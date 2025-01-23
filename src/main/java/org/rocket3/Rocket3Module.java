@@ -172,10 +172,14 @@ public class Rocket3Module extends ToggleableModule {
             return true;
         }
     }
-
+    boolean crafting = false;
+    public void isCrafting(boolean isCrafting)
+    {
+        crafting = isCrafting;
+    }
     @Subscribe
     private void onUpdate(EventUpdate event) {
-        if (activated)
+        if (activated && !crafting)
             rocket3Update();
     }
 
@@ -223,7 +227,10 @@ public class Rocket3Module extends ToggleableModule {
         final boolean craftingOption = craftingPaper;
 
         if (craftingFireworks) {
+            
+            crafting = true;
             executor.submit(() -> {
+
                 for (int i = 0; i < 4; i++) {
                     for (int inventorySlot = 9; inventorySlot <= 45; inventorySlot++) {
                         for (int j = 1; j <= 9; j++) {
@@ -251,7 +258,9 @@ public class Rocket3Module extends ToggleableModule {
                                         InventoryUtils.clickSlot(inventorySlot, true);
                                     } else {
                                         if (!CorrectRecipe(craftingOption, containerMenu))
-                                            return;
+                                        {
+                                           isCrafting(false); return;
+                                        }
                                         if (CheckRecipe(craftingOption, containerMenu)) {
                                             try {
 
@@ -285,7 +294,9 @@ public class Rocket3Module extends ToggleableModule {
                                     }
                                 } else {
                                     if (!CorrectRecipe(craftingOption, containerMenu))
-                                        return;
+                                    {
+                                        isCrafting(false); return;
+                                    }
                                     if (CheckRecipe(craftingOption, containerMenu)) {
                                         try {
                                             Thread.sleep(delay.getValue());
@@ -320,7 +331,9 @@ public class Rocket3Module extends ToggleableModule {
 
                                 } else {
                                     if (!CorrectRecipe(craftingOption, containerMenu))
-                                        return;
+                                    {
+                                        isCrafting(false); return;
+                                    }
                                     if (CheckRecipe(craftingOption, containerMenu)) {
                                         try {
 
@@ -338,7 +351,7 @@ public class Rocket3Module extends ToggleableModule {
                                     }
                                 }
 
-                                return;
+                                isCrafting(false); return;
                             }
                         }
                     }
@@ -353,6 +366,7 @@ public class Rocket3Module extends ToggleableModule {
             });
 
         } else if (craftingPaper) {
+            crafting = true;
             executor.submit(() -> {
                 for (int i = 0; i < 4; i++) {
                     for (int inventorySlot = 9; inventorySlot <= 45; inventorySlot++) {
@@ -380,7 +394,9 @@ public class Rocket3Module extends ToggleableModule {
                                             InventoryUtils.clickSlot(inventorySlot, true);
                                         } else {
                                             if (!CorrectRecipe(craftingOption, containerMenu))
-                                                return;
+                                            {
+                                                isCrafting(false); return;
+                                            }
                                             if (CheckRecipe(craftingOption, containerMenu)) {
                                                 try {
                                                     Thread.sleep(delay.getValue());
@@ -407,7 +423,9 @@ public class Rocket3Module extends ToggleableModule {
                                         }
                                     } else {
                                         if (!CorrectRecipe(craftingOption, containerMenu))
-                                            return;
+                                        {
+                                            isCrafting(false); return;
+                                        }
                                         if (CheckRecipe(craftingOption, containerMenu)) {
                                             Thread.sleep(delay.getValue());
                                             if (containerMenu.getSlot(0).getItem().getDisplayName().getString().equals("[Paper]") && CheckRecipe(craftingOption, containerMenu)) {
@@ -417,7 +435,7 @@ public class Rocket3Module extends ToggleableModule {
                                     }
                                 } catch (Exception e) {
                                 }
-                                return;
+                                isCrafting(false); return;
                             }
                         }
                     }
